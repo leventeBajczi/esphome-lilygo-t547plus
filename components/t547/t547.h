@@ -50,11 +50,22 @@ class T547 : public PollingComponent, public display::DisplayBuffer {
 
   size_t get_buffer_length_();
 
+  uint16_t dirty_x1 = get_width_internal();
+  uint16_t dirty_x2 = 0;
+  uint16_t dirty_y1 = get_height_internal();
+  uint16_t dirty_y2 = 0;
+
+  Rect_t get_dirty_area();
+  void extract_dirty_fb(Rect_t area, uint8_t* target);
+
 
   uint8_t panel_on_ = 0;
   uint8_t temperature_;
 
   bool greyscale_;
+
+  uint8_t* last_buffer;
+  int reload_cnt = 0;
 
 };
 
