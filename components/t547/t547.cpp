@@ -150,9 +150,9 @@ void T547::display() {
 
   epd_poweron();
   if(this->reload_cnt % 10 == 0) {
-    epd_clear_area_cycles(epd_full_screen(), 1, 10);
+    epd_clear();
     epd_draw_grayscale_image(epd_full_screen(), this->buffer_);
-    this->reload_cnt = 0;
+    this->reload_cnt = 1;
   }
   else {
     Rect_t dirty_area = this->get_dirty_area();
@@ -162,6 +162,7 @@ void T547::display() {
         extract_dirty_fb(dirty_area, dirty_fb);
         epd_draw_grayscale_image(dirty_area, dirty_fb);
         free(dirty_fb);
+        this->reload_cnt++;
     }
   }
   memcpy(this->last_buffer, this->buffer_, this->get_buffer_length_());
@@ -169,7 +170,6 @@ void T547::display() {
   this->dirty_x2 = 0;
   this->dirty_y1 = get_height_internal();
   this->dirty_y2 = 0;
-  this->reload_cnt++;
   epd_poweroff();
 
   ESP_LOGV(TAG, "Display finished (full) (%ums)", millis() - start_time);
