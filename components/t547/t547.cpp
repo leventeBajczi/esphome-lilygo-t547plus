@@ -120,7 +120,7 @@ Rect_t T547::get_dirty_area() {
   this->dirty_x2 = min(this->dirty_x2+10, get_width_internal());
   this->dirty_y2 = min(this->dirty_y2+10, get_height_internal());
     
-  Rect_t area = {.x = this->dirty_x1, .y = this->dirty_y1, .width = this->dirty_x2 - this->dirty_x1 + 1, .height = this->dirty_y2 - this->dirty_y1 + 1};
+  Rect_t area = {.x = this->dirty_x1, .y = this->dirty_y1, .width = (this->dirty_x2 - this->dirty_x1 + 2)/2 * 2, .height = (this->dirty_y2 - this->dirty_y1 + 2)/2 * 2};
   ESP_LOGD(TAG, "Dirty area found (%d, %d, %d, %d)", dirty_x1, dirty_y1, dirty_x2, dirty_y2);
   return area;
 }
